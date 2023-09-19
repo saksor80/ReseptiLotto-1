@@ -1,51 +1,8 @@
-# my-recipe-app
+# React + Vite
 
-## Project setup
-```
-npm install
-```
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Currently, two official plugins are available:
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-### Stuff I need from back-end
-
-- API Endpoint: A single endpoint /api/searchRecipes
-
-- HTTP Method: POST
-
-- Request Format: A JSON object containing an array of ingredients. For example:
-    {
-    "ingredients": ["tomato", "cheese", "basil"]
-    }
-
-- Response Format: A JSON object containing an array of recipes. For example:
-    {
-    "recipes": [
-        {
-        "id": 1,
-        "name": "Tomato Basil Pasta",
-        "description": "A simple yet tasty dish",
-        "imageURL": "some_url_here"
-        },
-        // ... more recipes
-    ]
-    }
-
-- Error Cases: what happens if no recipes are found?
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
