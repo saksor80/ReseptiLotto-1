@@ -1,8 +1,9 @@
+import './App.css'
 import { useState } from 'react'
 import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
 import RecipeCard from './components/RecipeCard'
-import './App.css'
+import AppBar from './components/AppBar'
+import { Box, Stack } from '@mui/material'
 
 const sampleRecipes = [
   { title: "Spaghetti Carbonara", description: "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper." },
@@ -21,22 +22,55 @@ const sampleRecipes = [
 
 function App() {
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [oldRecipe, setOldRecipe] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const discardRecipe = () => {
+    if (currentRecipe) {  // Only discard if there's a current recipe
+      setIsAnimating(true);
+      setOldRecipe(currentRecipe);
+      setCurrentRecipe(null); // Clear current recipe
+      setTimeout(() => {
+        setIsAnimating(false);
+        setOldRecipe(null);
+      }, 500);
+    }
+  };
+
+  const generateNewRecipe = () => {
+    const randomIndex = Math.floor(Math.random() * sampleRecipes.length);
+    setIsAnimating(true);  // Start slide-in animation
+    setCurrentRecipe(sampleRecipes[randomIndex]);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 500);
+  };
 
   const generateRecipe = () => {
-    const randomIndex = Math.floor(Math.random() * sampleRecipes.length);
-    setCurrentRecipe(sampleRecipes[randomIndex]);
+    if (currentRecipe) {
+      // First discard the current recipe
+      discardRecipe();
+      // Then generate a new one after the discard animation is done
+      setTimeout(() => {
+        generateNewRecipe();
+      }, 500);
+    } else {
+      // If there's no current recipe, just generate a new one
+      generateNewRecipe();
+    }
   };
 
   return (
     <>
-      <Container>
-        <Button variant="contained" color="primary" onClick={generateRecipe}>
-          Generate Recipe
-        </Button>
-        {currentRecipe && <RecipeCard recipe={currentRecipe} />}
-      </Container>
+      <AppBar />
+      <Stack overflow='hidden' spacing={5} justifyContent='center' alignItems='center' display='flex'>
+        <Button variant="contained" color="primary" onClick={generateRecipe} > Generate Recipe </Button> 
+        <Box>
+              {oldRecipe && (<div className={isAnimating ? "slide-out" : ""} ><RecipeCard recipe={oldRecipe} /></div>)}
+              {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
+        </Box>
+      </Stack>     
     </>
   )
 }
-
 export default App
