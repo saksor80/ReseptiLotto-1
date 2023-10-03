@@ -3,21 +3,27 @@ import { useState } from 'react'
 import Button from '@mui/material/Button'
 import RecipeCard from './components/RecipeCard'
 import AppBar from './components/AppBar'
+import SearchFilters from './components/SearchFilters'
+import ThemeWrapper from './components/ThemeWrapper'
 import { Box, Stack } from '@mui/material'
 
 const sampleRecipes = [
-  { title: "Spaghetti Carbonara", description: "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper." },
-  { title: "Sushi", description: "Japanese dish featuring vinegared rice combined with various ingredients like seafood, vegetables, and sometimes tropical fruits." },
-  { title: "Tacos", description: "A traditional Mexican dish consisting of a folded or rolled tortilla filled with various ingredients like meat, cheese, and lettuce." },
-  { title: "Chicken Tikka Masala", description: "Popular Indian dish made with marinated, grilled chicken submerged in a rich tomato-based sauce." },
-  { title: "Beef Stroganoff", description: "Russian origin dish that has sautéed beef pieces served in a sour cream-based sauce." },
-  { title: "Caesar Salad", description: "Green salad of romaine lettuce and croutons dressed with lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, and parmesan cheese." },
-  { title: "Pad Thai", description: "Stir-fried rice noodle dish commonly served as street food in Thailand, usually made with shrimp or chicken." },
-  { title: "Ramen", description: "Japanese noodle soup dish that consists of Chinese-style wheat noodles served in a meat or fish-based broth, often flavored with soy sauce or miso." },
-  { title: "Chili con Carne", description: "Spicy stew containing chili peppers, meat, and often tomatoes and beans." },
-  { title: "Croissants", description: "A buttery, flaky, and delicious pastry that is a breakfast staple in France." },
-  { title: "Pizza Margherita", description: "An Italian classic with fresh tomatoes, mozzarella cheese, fresh basil, and olive oil on a flatbread base." },
-  { title: "Banh Mi", description: "Vietnamese sandwich consisting of a French baguette filled with a variety of ingredients like meats, vegetables, and condiments." },
+  {
+    title: "Spaghetti Carbonara",
+    image: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg",
+    description: "Klassinen italialainen pastaruoka, joka on tehty munista, juustosta, pancettasta ja pippurista.",
+    ingredients: ["200g spagettia", "100g pancettaa", "2 isoa kananmunaa", "50g pecorino-juustoa", "50g parmesan-juustoa", "Vastajauhettua mustapippuria", "Suolaa", "2 valkosipulinkynttä", "Pieni nippu tuoretta lehtipersiljaa"],
+    timeToCook: "20 minuuttia",
+    steps: ["Keitä spagetti suolatussa vedessä kunnes se on al dente.", "Paista pancetta ja valkosipuli kunnes ne ovat rapeita.", "Vatkaa munat kulhossa ja lisää raastettu pecorino ja parmesan.", "Lisää muna-seos valutettuun spagettiin sekä pancetta. Sekoita kunnes seos on kermaista.", "Mausta suolalla ja pippurilla. Tarjoile lisää juustoa ja persiljaa päällä."]
+  },
+  {
+    title: "Banh Mi",
+    image: "https://images.pexels.com/photos/1483769/pexels-photo-1483769.jpeg",
+    description: "Vietnamilainen voileipä, joka koostuu ranskalaisesta patongista, joka on täytetty erilaisilla ainesosilla, kuten lihalla, vihanneksilla ja mausteilla.",
+    ingredients: ["1 ranskalainen patonki", "200g grillattua possua (viipaloitu)", "Daikon & porkkana pikkelssiä", "Kurkkusiivuja", "2 ruokalusikallista majoneesia", "1 ruokalusikallinen soijakastiketta", "1 viipaloitu jalapeno", "Tuoretta korianteria"],
+    timeToCook: "15 minuuttia",
+    steps: ["Leikkaa patonki pituussuunnassa, mutta ei kokonaan kahtia.", "Levitä majoneesi yhdelle puolelle leipää.", "Lisää kerrokset grillatulla possulla, sitten pikkelssit, kurkku, jalapeno ja korianteri.", "Pirskota päälle soijakastike.", "Paina voileipää hieman yhdistääkseen maut ja tarjoile."]
+  }
 ];
 
 function App() {
@@ -62,14 +68,17 @@ function App() {
 
   return (
     <>
-      <AppBar />
-      <Stack overflow='hidden' spacing={5} justifyContent='center' alignItems='center' display='flex'>
-        <Button variant="contained" color="primary" onClick={generateRecipe} > Generate Recipe </Button> 
-        <Box>
-              {oldRecipe && (<div className={isAnimating ? "slide-out" : ""} ><RecipeCard recipe={oldRecipe} /></div>)}
-              {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
-        </Box>
-      </Stack>     
+      <ThemeWrapper>
+        <AppBar />               
+        <Stack overflow='hidden' spacing={5} justifyContent='center' alignItems='center' display='flex'>
+        <SearchFilters />    
+          <Button variant="contained" color="primary" onClick={generateRecipe} > Generate Recipe </Button> 
+          <Box>
+                {oldRecipe && (<div className={isAnimating ? "slide-out" : ""} ><RecipeCard recipe={oldRecipe} /></div>)}
+                {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
+          </Box>
+        </Stack>
+      </ThemeWrapper>    
     </>
   )
 }
