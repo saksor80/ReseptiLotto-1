@@ -104,7 +104,7 @@ const ingredients = [
     // ... more ingredients ...
 ];
 
-function SearchFilters() {
+function SearchFilters({ selectedIngredients, onIngredientsChange }) {
 	return (
 		<Autocomplete
 			sx={{ width: '90vw', justifyContent:'center', }}
@@ -124,7 +124,12 @@ function SearchFilters() {
 					label="Ainesosat"
 					placeholder="Lisää ainesosia..."
 				/>	
-			)}			
+			)}
+            value={selectedIngredients}
+            onChange={(event, newValue) => {
+                // console.log(newValue);
+                onIngredientsChange(newValue);
+            }}		
 		/>
 	);
 }

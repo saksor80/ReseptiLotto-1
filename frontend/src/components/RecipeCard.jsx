@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { List, ListItem } from '@mui/material';
-import { CardActionArea } from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,18 +32,18 @@ export default function RecipeCard({ recipe }) {
   return (
     <Card sx={{ minWidth: 345, maxWidth: 600, ml: 2, mr: 2, mb: 2, boxShadow: 2 }}>
       <CardHeader
-        title={recipe.title}
-        subheader={recipe.timeToCook}
+        title={recipe?.title}
+        subheader={recipe?.timeToCook}
       />
       <CardMedia
         component="img"
         height="240"
-        image={recipe.image}
-        alt={recipe.title}
+        image={recipe?.image}
+        alt={recipe?.title || "Recipe Image"}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {recipe.description}
+          {recipe?.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -60,25 +59,22 @@ export default function RecipeCard({ recipe }) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography sx={{ fontWeight: 'medium' }}>Ainekset:</Typography>
-          <Typography paragraph>
-            <List>
-              {recipe.ingredients.map((ingredient, index) => (
-                <ListItem key={index} >
-                  {ingredient}
-                </ListItem>
-              ))}
-            </List>
-          </Typography>
+          <List>
+            {recipe?.ingredients?.map((ingredient) => (
+              <ListItem key={ingredient} >
+                {ingredient}
+              </ListItem>
+            ))}
+          </List>
+          <br />
           <Typography sx={{ fontWeight: 'medium' }}>Ohjeet:</Typography>
-          <Typography paragraph>
-            <List>
-              {recipe.steps.map((step, index) => (
-                <ListItem key={index} >
-                  {step}
-                </ListItem>
-              ))}
-            </List>
-          </Typography>
+          <List>
+            {recipe?.steps?.map((step) => (
+              <ListItem key={step} >
+                {step}
+              </ListItem>
+            ))}
+          </List>
         </CardContent>
       </Collapse>
     </Card>

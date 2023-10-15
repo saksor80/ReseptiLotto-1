@@ -31,6 +31,43 @@ function App() {
   const [oldRecipe, setOldRecipe] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+  const fetchRecipeByIngredients = async () => {    
+    try {
+      console.log(selectedIngredients);
+      console.log(JSON.stringify({ ingredients: selectedIngredients }));
+      const response = await fetch('https://your-api-endpoint.com/getRecipe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ingredients: selectedIngredients }),
+      });
+  
+      if (!response.ok) throw new Error('Network response was not ok');
+  
+      const data = await response.json();
+      setCurrentRecipe(data);
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
+  };
+
+  const generateRecipe = () => {
+    if (currentRecipe) {
+      // First discard the current recipe
+      discardRecipe();
+      // Then generate a new one after the discard animation is done
+      setTimeout(() => {
+        fetchRecipeByIngredients();
+      }, 500);
+    } else {
+      // If there's no current recipe, just generate a new one
+      fetchRecipeByIngredients();
+    }
+  };
+
   const discardRecipe = () => {
     if (currentRecipe) {  // Only discard if there's a current recipe
       setIsAnimating(true);
@@ -52,7 +89,7 @@ function App() {
     }, 500);
   };
 
-  const generateRecipe = () => {
+  const generateMockRecipe = () => {
     if (currentRecipe) {
       // First discard the current recipe
       discardRecipe();
@@ -69,16 +106,22 @@ function App() {
   return (
     <>
       <ThemeWrapper>
-        <AppBar />               
+        <AppBar />
         <Stack overflow='hidden' spacing={5} justifyContent='center' alignItems='center' display='flex'>
-        <SearchFilters />    
-          <Button variant="contained" color="primary" onClick={generateRecipe} > Generate Recipe </Button> 
+          <SearchFilters
+            selectedIngredients={selectedIngredients}
+            onIngredientsChange={(newIngredients) => setSelectedIngredients(newIngredients)}
+          />
+          <Box sx={{ display: 'flex' }}>
+            <Button variant="contained" color="primary" onClick={generateRecipe} sx={{ mr: 2 }} > Hae Resepti </Button>
+            <Button variant="contained" color="primary" onClick={generateMockRecipe} > Mock Recipe </Button>
+          </Box>          
           <Box>
-                {oldRecipe && (<div className={isAnimating ? "slide-out" : ""} ><RecipeCard recipe={oldRecipe} /></div>)}
-                {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
+            {oldRecipe && (<div className={isAnimating ? "slide-out" : ""} ><RecipeCard recipe={oldRecipe} /></div>)}
+            {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
           </Box>
         </Stack>
-      </ThemeWrapper>    
+      </ThemeWrapper>
     </>
   )
 }
