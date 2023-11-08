@@ -5,6 +5,7 @@ import RecipeCard from './components/RecipeCard'
 import AppBar from './components/AppBar'
 import SearchFilters from './components/SearchFilters'
 import ThemeWrapper from './components/ThemeWrapper'
+import PopUp from './components/PopUp'
 import { Box, Stack } from '@mui/material'
 
 const sampleRecipes = [
@@ -30,6 +31,7 @@ function App() {
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [oldRecipe, setOldRecipe] = useState(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [recipeRequestCount, setRecipeRequestCount] = useState(0);
 
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
@@ -66,6 +68,8 @@ function App() {
       // If there's no current recipe, just generate a new one
       fetchRecipeByIngredients();
     }
+    setRecipeRequestCount(prevCount => prevCount + 1);
+    console.log('count: ', recipeRequestCount);
   };
 
   const discardRecipe = () => {
@@ -101,6 +105,8 @@ function App() {
       // If there's no current recipe, just generate a new one
       generateNewRecipe();
     }
+    setRecipeRequestCount(prevCount => prevCount + 1);
+    console.log('mock count: ', recipeRequestCount);
   };
 
   return (
@@ -121,6 +127,7 @@ function App() {
             {currentRecipe && (<div className={isAnimating ? "slide-in" : ""} ><RecipeCard recipe={currentRecipe} /></div>)}
           </Box>
         </Stack>
+        <PopUp recipeRequestCount={recipeRequestCount} />
       </ThemeWrapper>
     </>
   )
