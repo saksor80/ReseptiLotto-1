@@ -35,11 +35,32 @@ function App() {
 
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-  const fetchRecipeByIngredients = async () => {    
+  // const fetchRecipeByIngredients = async () => {    
+  //   try {
+  //     console.log(selectedIngredients);
+  //     console.log(JSON.stringify({ ingredients: selectedIngredients }));
+  //     const response = await fetch('https://your-api-endpoint.com/getRecipe', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ ingredients: selectedIngredients }),
+  //     });
+  
+  //     if (!response.ok) throw new Error('Network response was not ok');
+  
+  //     const data = await response.json();
+  //     setCurrentRecipe(data);
+  //   } catch (error) {
+  //     console.error('There was a problem with the fetch operation:', error);
+  //   }
+  // };
+
+  const fetchRecipeByIngredients = async () => {
     try {
       console.log(selectedIngredients);
       console.log(JSON.stringify({ ingredients: selectedIngredients }));
-      const response = await fetch('https://your-api-endpoint.com/getRecipe', {
+      const postResponse = await fetch('http://localhost:53569/api/resepti/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,10 +68,21 @@ function App() {
         body: JSON.stringify({ ingredients: selectedIngredients }),
       });
   
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!postResponse.ok) throw new Error('Network response was not ok for POST request');
   
-      const data = await response.json();
-      setCurrentRecipe(data);
+      const postData = await postResponse.json();
+      // Assuming the ID is in postData.id
+      const recipeId = postData.id;
+  
+      const getResponse = await fetch(`http://localhost:53569/api/resepti/${recipeId}`, {
+        method: 'GET'
+      });
+  
+      if (!getResponse.ok) throw new Error('Network response was not ok for GET request');
+  
+      const recipeData = await getResponse.json();
+      setCurrentRecipe(recipeData);
+      console.log('response', getResponse);
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
     }
