@@ -72,7 +72,7 @@ function App() {
   
       const postData = await postResponse.json();
       // Assuming the ID is in postData.id
-      const recipeId = postData.id;
+      const recipeId = postData.Id;
   
       const getResponse = await fetch(`http://localhost:53569/api/resepti/${recipeId}`, {
         method: 'GET'
