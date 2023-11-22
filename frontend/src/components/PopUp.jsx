@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 
 function PopUp({ recipeRequestCount }) {
   const [open, setOpen] = useState(false);
-  const [randomMessage, setRandomMessage] = useState('');
+  const [randomMessage, setRandomMessage] = useState("");
 
   // Varmistetaan, että kun recipeRequestCount muuttuu, tarkistetaan onko se saavuttanut kolme.
   useEffect(() => {
@@ -39,7 +39,7 @@ function PopUp({ recipeRequestCount }) {
     "Jätä minut jo rauhaan!",
     "En ole mikään arpa-automaatti… Päätä itse ruokasi!",
   ];
-  
+
   // Funktio, joka palauttaa satunnaisen tekstin
   const getRandomMessage = () => {
     const randomIndex = Math.floor(Math.random() * messages.length);
@@ -48,6 +48,7 @@ function PopUp({ recipeRequestCount }) {
 
   return (
     <Dialog
+      sx={{ width: 350, maxWidth: "100%", mx: "auto" }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
@@ -56,11 +57,16 @@ function PopUp({ recipeRequestCount }) {
       <DialogTitle id="alert-dialog-title">{"Hohhoijaa!"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-        {randomMessage}
+          {randomMessage}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={handleClose} color="primary" autoFocus>
+        <Button
+          variant="outlined"
+          onClick={handleClose}
+          color="primary"
+          autoFocus
+        >
           Asia selvä
         </Button>
       </DialogActions>
