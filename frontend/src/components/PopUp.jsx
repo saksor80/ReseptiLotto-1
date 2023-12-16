@@ -6,11 +6,16 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 
+// PopUp displays a dialog with a random message when recipeRequestCount reaches 4 or more
 function PopUp({ recipeRequestCount }) {
+
+  // State for controlling dialog visibility
   const [open, setOpen] = useState(false);
+
+  // State for storing the current random message
   const [randomMessage, setRandomMessage] = useState("");
 
-  // Varmistetaan, että kun recipeRequestCount muuttuu, tarkistetaan onko se saavuttanut kolme.
+  // Effect hook to open the dialog and set a random message when recipeRequestCount is 4 or more
   useEffect(() => {
     if (recipeRequestCount >= 4) {
       setOpen(true);
@@ -18,10 +23,12 @@ function PopUp({ recipeRequestCount }) {
     }
   }, [recipeRequestCount]);
 
+  // Function to close the dialog
   const handleClose = () => {
     setOpen(false);
   };
 
+  // Array of humorous messages for the dialog
   const messages = [
     "Jatkuva klikkailu kielletty!",
     "Lakkaa painelemasta minua!",
@@ -40,7 +47,7 @@ function PopUp({ recipeRequestCount }) {
     "En ole mikään arpa-automaatti… Päätä itse ruokasi!",
   ];
 
-  // Funktio, joka palauttaa satunnaisen tekstin
+  // Function to retrieve a random message from the messages array
   const getRandomMessage = () => {
     const randomIndex = Math.floor(Math.random() * messages.length);
     return messages[randomIndex];

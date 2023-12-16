@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { List, ListItem } from "@mui/material";
 
+// Styled IconButton that rotates based on the 'expanded' state
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -22,9 +23,13 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+// RecipeCard renders a responsive card displaying a recipe's details
 export default function RecipeCard({ recipe }) {
+
+  // State to control the expanded state of the card
   const [expanded, setExpanded] = React.useState(false);
 
+   // Function to toggle the expanded state
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

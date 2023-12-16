@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+// Create a custom theme for Material-UI components
 const theme = createTheme({
     palette: {
         primary: {
@@ -42,7 +43,9 @@ const theme = createTheme({
     },
 });
 
+// ThemeWrapper component to provide the custom theme to its children
 function ThemeWrapper({ children }) {
+  // Wrapping children with the ThemeProvider to apply the theme
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
 

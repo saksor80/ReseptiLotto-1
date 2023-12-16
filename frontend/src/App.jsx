@@ -8,6 +8,7 @@ import ThemeWrapper from "./components/ThemeWrapper";
 import PopUp from "./components/PopUp";
 import { Box, Stack } from "@mui/material";
 
+// Mock recipies
 const sampleRecipes = [
   {
     title: "Spaghetti Carbonara",
@@ -60,6 +61,7 @@ const sampleRecipes = [
   },
 ];
 
+
 function App() {
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [oldRecipe, setOldRecipe] = useState(null);
@@ -67,6 +69,7 @@ function App() {
   const [recipeRequestCount, setRecipeRequestCount] = useState(0);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
+  // Function to fetch a recipe based on selected ingredients
   const fetchRecipeByIngredients = async (callback) => {
     try {
       console.log(selectedIngredients);
@@ -101,9 +104,9 @@ function App() {
       const formattedRecipe = {
         title: recipeData.recipe.title,
         description: recipeData.recipe.description,
-        ingredients: recipeData.recipe.ingredients.ingredient, // assuming ingredients are an array
+        ingredients: recipeData.recipe.ingredients.ingredient,
         timeToCook: recipeData.recipe.timeToCook,
-        steps: recipeData.recipe.instructions.step, // assuming steps are an array
+        steps: recipeData.recipe.instructions.step,
         image: "/images/pexels-spencer-davis-4393021.jpg", // using static image for every recipe
       };
 
@@ -116,6 +119,7 @@ function App() {
     }
   };
 
+  // Function to handle the generation of a new recipe
   const generateRecipe = () => {
     if (currentRecipe) {
       // First discard the current recipe
@@ -142,6 +146,7 @@ function App() {
     console.log("count: ", recipeRequestCount);
   };
 
+  // Function to discard the current recipe
   const discardRecipe = () => {
     if (currentRecipe) {
       // Only discard if there's a current recipe
@@ -155,6 +160,7 @@ function App() {
     }
   };
 
+  // Function to generate a random recipe from the sample set
   const generateNewRecipe = () => {
     const randomIndex = Math.floor(Math.random() * sampleRecipes.length);
     setIsAnimating(true); // Start slide-in animation
@@ -164,6 +170,7 @@ function App() {
     }, 500);
   };
 
+  // Function to mock the recipe generation process
   const generateMockRecipe = () => {
     if (currentRecipe) {
       // First discard the current recipe
