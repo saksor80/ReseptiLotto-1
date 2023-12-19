@@ -36,8 +36,8 @@ namespace Reseptilotto.Controllers
                 SqlConnectionStringBuilder sqlbuilder = new SqlConnectionStringBuilder
                 {
                     DataSource = "mysqlserver2300823.database.windows.net",
-                    UserID = "avirrankoski",
-                    Password = "Morowindi100",
+                    UserID = "",
+                    Password = "",
                     InitialCatalog = "Ruokareseptit"
                 };
                 
